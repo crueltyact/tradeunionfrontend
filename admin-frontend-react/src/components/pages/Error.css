@@ -1,0 +1,44 @@
+.notfound {
+    font-family: sans-serif;
+    padding: 40px 0 120px 0; 
+}
+
+.notfound__inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.notfound__title {
+    text-transform: uppercase;
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 60px;
+}
+
+.notfound__info {
+    line-height: 1.5;
+    white-space: normal;       
+    word-break: break-word;
+    text-align: center;
+    font-size: 26px;
+    color: #000;
+}
+
+.notfound__button {
+    padding: 22px 27px;
+    background-color: #000;
+    border: 2px solid transparent;
+    color: #fff;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 60px;
+}
+
+.notfound__button:hover {
+    background-color: #fff;
+    color:#000;
+    border-color: #000;
+}

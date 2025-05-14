@@ -1,0 +1,16 @@
+.document-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+    text-decoration: none;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.document-item__title {
+    color: #3e3e3e;
+    font-size: 16px;
+    font-weight: 600;
+}

@@ -1,0 +1,32 @@
+.guide-theme {
+    font-family: sans-serif;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .guide-theme__block {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: left;
+  }
+  .guide-theme__title-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .guide-theme__content {
+    font-size: 14px;
+    color: #000;
+    font-weight: 400;
+  }

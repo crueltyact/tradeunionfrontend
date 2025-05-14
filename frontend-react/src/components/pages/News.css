@@ -1,0 +1,10 @@
+.news__content {
+    padding: 50px 0;
+}
+
+.news__content-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+

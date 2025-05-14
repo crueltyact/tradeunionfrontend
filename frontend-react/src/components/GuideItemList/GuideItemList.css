@@ -1,0 +1,15 @@
+.guide-section {
+    margin-bottom: 24px;
+}
+  
+.guide-section h3 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.guide-themes {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

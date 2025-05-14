@@ -1,0 +1,26 @@
+.document-item {
+    text-decoration: none;
+    flex: 0 0 calc((100% - 90px) / 4);
+}
+.document-item__preview {
+    width: 100%;
+    background-color: #eceff4;
+    padding: 60px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    transition: background-color 0.4s ease;
+}
+.document-item__preview:hover {
+    background-color: #172B44;
+}
+.document-item__preview img {
+    width: 105px;
+    height: 120px;
+}
+.document-item__title {
+    color: #3e3e3e;
+    font-size: 16px;
+    font-weight: 600;
+}

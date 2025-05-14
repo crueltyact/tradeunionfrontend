@@ -1,0 +1,29 @@
+.logo-loader {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 4px;
+    height: 64px;
+  }
+  
+  .bar {
+    width: 20px;
+    height: 50px;
+    background: black;
+    transform: skewX(-20deg);
+    animation: bounce 1s infinite ease-in-out;
+  }
+  
+  .bar1 { animation-delay: 0s; }
+  .bar2 { animation-delay: 0.15s; }
+  .bar3 { animation-delay: 0.3s; }
+  .bar4 { animation-delay: 0.45s; }
+  
+  @keyframes bounce {
+    0%, 100% {
+      transform: skewX(-20deg) translateY(0);
+    }
+    50% {
+      transform: skewX(-20deg) translateY(-10px);
+    }
+  }

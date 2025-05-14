@@ -1,0 +1,55 @@
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import './Slider.css';
+import { useEffect, useState } from 'react';
+import APIService from '../../API/APIService';
+import { useFetching } from '../hooks/UseFetching';
+import Loader from "../Loader/Loader.jsx";
+import NewsItem from '../NewsItem/NewsItem.jsx';
+
+const Slider = () => {
+    const [slides, setSlides] = useState([]);
+    const [fetchSlides, isLoading, error] = useFetching(async () => {
+        const response = await APIService.getAllNews();
+        setSlides(response.data)
+        console.log(response)
+    })
+    useEffect(() => {
+        fetchSlides();
+    }, [])
+  return (
+    <>
+        {isLoading
+            ? <Loader/>
+            : 
+            <Swiper 
+                modules={[Autoplay]}
+                slidesPerView={'auto'}
+                spaceBetween={0} 
+                loop={true}
+                autoplay={{
+                    delay: 3000,
+                    disableOnInteraction: false, 
+                    pauseOnMouseEnter: true,
+                }}                
+            >
+                {slides.map((slide) => (
+                    <SwiperSlide key={slide.id} className={`slide`}>
+                        <NewsItem item={slide} />
+                        {/* <img src={slide.image_url} alt={slide.title} className="slide__img" />
+                        <div className="slide__overlay">
+                        <span className="slide__date">{new Date(slide.created_at).toLocaleDateString("ru-RU")}</span>
+                        <span className="slide__title">{slide.title}</span>
+                        </div> */}
+                    </SwiperSlide>
+                ))}
+            </Swiper>
+        }
+    </>
+
+    
+  );
+};
+
+export default Slider;

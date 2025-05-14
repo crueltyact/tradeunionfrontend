@@ -1,0 +1,31 @@
+.hero-section {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    overflow: hidden;
+    background-color: #B1B5C3;
+    font-family: sans-serif;
+    color: #fcfcfd;
+}
+  
+.hero-section::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+  
+.hero-section__inner {
+    padding: 105px 0;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+}
+.hero-section__title {
+    max-width: 60%;
+    font-size: 64px;
+    font-weight: 600;
+}

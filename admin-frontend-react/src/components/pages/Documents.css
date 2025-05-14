@@ -1,0 +1,34 @@
+.documents {
+    padding: 50px 0;
+}
+.documents__inner {
+    max-width: 600px;
+    font-family: sans-serif;
+    padding: 50px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.documents__title {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 30px;
+}
+
+.document-lists {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    gap: 20px;
+}
+.document-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 10px;
+}
