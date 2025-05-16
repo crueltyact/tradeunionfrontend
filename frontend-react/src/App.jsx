@@ -4,6 +4,7 @@ import Header from './components/UI/Header/Header.jsx'
 import Footer from './components/UI/Footer/Footer.jsx'
 import AppRouter from './components/AppRouter.jsx'
 import ScrollToTop from './components/UI/ScrollToTop/ScrollToTop.jsx'
+import ChatButton from './components/UI/ChatButton/ChatButton.jsx'
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <AppRouter/>
       <Footer/>
       <ScrollToTop />
+      <ChatButton />
     </BrowserRouter>
   )
 

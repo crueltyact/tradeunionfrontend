@@ -13,7 +13,6 @@ const Slider = () => {
     const [fetchSlides, isLoading, error] = useFetching(async () => {
         const response = await APIService.getAllNews();
         setSlides(response.data)
-        console.log(response)
     })
     useEffect(() => {
         fetchSlides();
