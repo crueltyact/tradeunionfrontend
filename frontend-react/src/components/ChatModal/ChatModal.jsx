@@ -11,6 +11,7 @@ const ChatModal = ({ onClose }) => {
     const [inputMessage, setInputMessage] = useState("");
     const [socket, setSocket] = useState(null);
     const [worker, setWorker] = useState(null);
+    const [prevMessages, setPrevMessages] = useState([]);
 
     useEffect(() => {
         // const storedChatId = localStorage.getItem("chatId");
@@ -59,8 +60,10 @@ const ChatModal = ({ onClose }) => {
         const response = await APIService.startChat(ticketNumber);
         if (!response) throw new Error("Не удалось создать чат");
         const data = response.data;
+        console.log(response.data)
         setChatId(data.chat_id);
         setWorker(data.worker);
+        setPrevMessages(data.messages);
         setChatStarted(true);
         const newChatId = data.chat_id;
         const ws = new WebSocket(`ws://82.202.156.164:8080/client/v1/chat/ws/${newChatId}?tradeUnionID=${ticketNumber}`);
@@ -119,6 +122,11 @@ const ChatModal = ({ onClose }) => {
                 )}
 
                 <div className="chat-messages">
+                    {prevMessages.map((msg, idx) => (
+                        <div key={idx} className={`message-bubble ${msg.role === "client" ? "user-message" : "worker-message"}`}>
+                            {msg.content}
+                        </div>
+                    ))}
                     {messages.map((msg, idx) => (
                         <div key={idx} className={`message-bubble ${msg.role === "client" ? "user-message" : "worker-message"}`}>
                             {msg.content}

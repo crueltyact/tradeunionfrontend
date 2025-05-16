@@ -149,4 +149,8 @@ export default class APIService {
         const response = await apiClient.post('/admin/v1/auth/enrich-profile/', formData);
         return response;
     }
+    static async getUserChats() {
+        const response = await apiClient.get('/admin/v1/chat/');
+        return response;
+    }
 }

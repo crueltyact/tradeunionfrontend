@@ -25,6 +25,7 @@ const Header = () => {
             <Link to="/guide">Справочник</Link>
             <Link to="/projects">Проекты</Link>
             <Link to="/news">Новости</Link>
+            <Link to="/chat">Чат</Link>
           </nav>
             {isAuth && <Button onClick={handleLogout}>Выйти</Button>}
         </div>
