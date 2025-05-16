@@ -37,11 +37,6 @@ const Slider = () => {
                 {slides.map((slide) => (
                     <SwiperSlide key={slide.id} className={`slide`}>
                         <NewsItem item={slide} />
-                        {/* <img src={slide.image_url} alt={slide.title} className="slide__img" />
-                        <div className="slide__overlay">
-                        <span className="slide__date">{new Date(slide.created_at).toLocaleDateString("ru-RU")}</span>
-                        <span className="slide__title">{slide.title}</span>
-                        </div> */}
                     </SwiperSlide>
                 ))}
             </Swiper>

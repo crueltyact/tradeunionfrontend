@@ -26,9 +26,11 @@
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    min-width: 600px;
+    width: 1120px;
     max-width: 90%;
     position: relative;
+    overflow-y: auto;
+    max-height: 100vh;
   }
   .modal-content__wrapper {
     display: flex;
@@ -51,10 +53,19 @@
     margin-bottom: 16px;
   }
   
-  .form-group input, .form-group textarea {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 100%;
-    margin-top: 5px;
-  }
+.form-group input,
+.form-group textarea {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  margin-top: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.form-group textarea {
+  min-height: 40px;
+  transition: height 0.2s ease-in-out;
+}
+  

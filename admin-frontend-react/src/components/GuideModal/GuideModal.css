@@ -29,6 +29,8 @@
     min-width: 600px;
     max-width: 90%;
     position: relative;
+    overflow-y: auto;
+    max-height: 100vh;
   }
   .modal-content__wrapper {
     display: flex;

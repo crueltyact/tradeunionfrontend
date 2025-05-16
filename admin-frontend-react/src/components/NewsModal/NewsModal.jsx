@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import "./NewsModal.css"; 
 import Button from "../UI/Button/Button"
 import APIService from "../../API/APIService";
+import MarkdownEditor from "../MarkdownEditor/MarkdownEditor";
 
 const NewsModal = ({ isOpen, onClose }) => {
   const [title, setTitle] = useState('');
@@ -40,12 +41,6 @@ const NewsModal = ({ isOpen, onClose }) => {
     }
   };
   const handleClose = () => {
-    setTitle('');
-    setContent('');
-    setImage(null);
-    if (fileInputRef.current) {
-        fileInputRef.current.value = '';
-    }
     onClose();
   };
   const handleImageChange = (e) => {
@@ -71,12 +66,24 @@ const NewsModal = ({ isOpen, onClose }) => {
 
             <div className="form-group">
               <label htmlFor="title">Заголовок:</label>
-              <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
+              <MarkdownEditor value={title} onChange={setTitle} onSubmit={handleSubmit} />
+              {/* <AutoResizingTextarea
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                minRows={2}
+                maxRows={10}
+              /> */}
             </div>
 
             <div className="form-group">
               <label htmlFor="content">Содержание:</label>
-              <textarea value={content} onChange={(e) => setContent(e.target.value)} required />
+              <MarkdownEditor value={content} onChange={setContent} />
+              {/* <AutoResizingTextarea
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                minRows={3}
+                maxRows={10}
+              /> */}
             </div>
             
             <div className="form-group">

@@ -6,6 +6,9 @@ import Loader from "../Loader/Loader"
 import { useParams } from "react-router-dom";
 import HeroSection from "../HeroSection/HeroSection";
 import FadeInSection from "../../FadeInSection";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
 
 const NewsIdPage = () => {
     const params = useParams()
@@ -30,7 +33,11 @@ const NewsIdPage = () => {
                     <FadeInSection>
                         <section className="news__content">
                             <div className="container news__content-inner">
-                                <p className="news__content-text">{newsItem.content}</p>
+                                <div className="news__content-text">
+                                    <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
+                                        {newsItem.content}
+                                    </ReactMarkdown>
+                                </div>
                             </div>
                         </section>
                     </FadeInSection>

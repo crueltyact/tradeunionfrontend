@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import "./ProjectsModal.css"; 
 import Button from "../UI/Button/Button"
 import APIService from "../../API/APIService";
+import MarkdownEditor from "../MarkdownEditor/MarkdownEditor";
 
 const ProjectsModal = ({ isOpen, onClose }) => {
   const [title, setTitle] = useState('');
@@ -44,13 +45,6 @@ const ProjectsModal = ({ isOpen, onClose }) => {
     }
   };
   const handleClose = () => {
-    setTitle('');
-    setDescription('');
-    setType('student');
-    setImage(null);
-    if (fileInputRef.current) {
-        fileInputRef.current.value = '';
-    }
     onClose();
   };
 
@@ -93,12 +87,12 @@ const ProjectsModal = ({ isOpen, onClose }) => {
 
             <div className="form-group">
               <label htmlFor="title">Заголовок:</label>
-              <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
+              <MarkdownEditor value={title} onChange={setTitle} />
             </div>
 
             <div className="form-group">
               <label htmlFor="description">Описание:</label>
-              <textarea value={description} onChange={(e) => setDescription(e.target.value)} required />
+              <MarkdownEditor value={description} onChange={setDescription} />
             </div>
             
             <div className="form-group">

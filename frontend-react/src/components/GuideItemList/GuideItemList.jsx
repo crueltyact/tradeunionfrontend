@@ -10,7 +10,7 @@ const GuideItemList = ({activeTab, guides}) => {
                     <h3 style={{fontSize: "32px"}}>{section.label}</h3>
                     <ul className="guide-themes">
                         {section.themes.map((theme) => (
-                            <GuideItem theme={theme} />
+                            <GuideItem key={theme.id} theme={theme} />
                         ))}
                     </ul>
                 </div>

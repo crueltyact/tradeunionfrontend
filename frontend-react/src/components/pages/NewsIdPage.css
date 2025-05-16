@@ -1,0 +1,15 @@
+.news__content-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    font-size: 24px;
+}
+.news__content-text,
+.react-markdown {
+  line-height: 1.5;
+}
+
+/* .news__content-text p,
+.react-markdown p {
+  margin-bottom: 1.5em;
+} */

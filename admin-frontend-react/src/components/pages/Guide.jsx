@@ -81,8 +81,10 @@ const Guide = () => {
                                     <div key={section.id} className="guide-section">
                                         <div className="guide-section__title-wrapper">
                                             <h3 style={{fontSize: "24px"}}>{section.label}</h3>
-                                            <Button onClick={() => openAddThemeModal(section.id)} style={{ padding: "6px 8px" }}>Добавить тему</Button>
-                                            <Button style={{ padding: "6px 8px", backgroundColor: "red" }} onClick={() => handleDeleteSection(section.id)}>Удалить раздел</Button>
+                                            <div className="guide-section__buttons">
+                                                <Button onClick={() => openAddThemeModal(section.id)} style={{ padding: "6px 8px" }}>Добавить тему</Button>
+                                                <Button style={{ padding: "6px 8px", backgroundColor: "red" }} onClick={() => handleDeleteSection(section.id)}>Удалить раздел</Button>
+                                            </div>
                                         </div>
                                         <ul className="guide-themes">
                                         {section.themes.map((theme) => (
@@ -98,8 +100,10 @@ const Guide = () => {
                                     <div key={section.id} className="guide-section">
                                         <div className="guide-section__title-wrapper">
                                             <h3 style={{fontSize: "24px"}}>{section.label}</h3>
-                                            <Button onClick={() => openAddThemeModal(section.id)} style={{ padding: "6px 8px" }}>Добавить тему</Button>
-                                            <Button style={{ padding: "8px 10px", backgroundColor: "red" }} onClick={() => handleDeleteSection(section.id)}>Удалить раздел</Button>
+                                            <div className="guide-section__buttons">
+                                                <Button onClick={() => openAddThemeModal(section.id)} style={{ padding: "6px 8px" }}>Добавить тему</Button>
+                                                <Button style={{ padding: "8px 10px", backgroundColor: "red" }} onClick={() => handleDeleteSection(section.id)}>Удалить раздел</Button>
+                                            </div> 
                                         </div>
                                         <ul className="guide-themes">
                                             {section.themes.map((theme) => (

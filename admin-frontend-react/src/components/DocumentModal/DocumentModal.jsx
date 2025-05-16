@@ -58,10 +58,10 @@ const DocumentModal = ({ isOpen, onClose }) => {
     };
 
   const handleClose = () => {
-    setSelectedFiles([])
-    if (fileInputRef.current) {
-        fileInputRef.current.value = '';
-    }
+    // setSelectedFiles([])
+    // if (fileInputRef.current) {
+    //     fileInputRef.current.value = '';
+    // }
     onClose();
   };
 

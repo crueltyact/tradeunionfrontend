@@ -1,19 +1,28 @@
 import "./GuideItem.css"
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
 const GuideItem = (props) => {
     const [isOpen, setIsOpen] = useState(false);
     return (
-      <li key={props.theme.id} className={`guide-theme ${isOpen ? "open" : ""}`}>
-        <span onClick={() => setIsOpen(!isOpen)} className={`icon ${isOpen ? "open" : ""}`}>
+      <li className={`guide-theme ${isOpen ? "open" : ""}`}>
+        <div className="guide-theme__icon-container">
+            <span
+            onClick={() => setIsOpen(!isOpen)}
+            className={`icon ${isOpen ? "open" : ""}`}
+            >
             <span />
             <span />
-        </span>
+            </span>
+        </div>
         <div onClick={() => setIsOpen(!isOpen)} className="guide-theme__block">
-            <h4 style={{cursor: "pointer"}}>{props.theme.title}</h4>
-            {/* <div className={`guide-theme__content ${isOpen ? "open" : ""}`}>
-                {props.theme.content}
-            </div> */}
+            <h4 style={{cursor: "pointer"}}>
+                <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
+                    {props.theme.title}
+                </ReactMarkdown>
+            </h4>
             <AnimatePresence initial={false}>
                 {isOpen && (
                     <motion.div
@@ -24,7 +33,9 @@ const GuideItem = (props) => {
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.3 }}
                     >
-                        {props.theme.content}
+                        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
+                            {props.theme.content}
+                        </ReactMarkdown>
                     </motion.div>
                 )}
             </AnimatePresence>

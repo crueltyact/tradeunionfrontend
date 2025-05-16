@@ -7,7 +7,7 @@ const ProjectsItemList = ({activeTab, projects}) => {
         <>
             <div className="projects-list">
                 {currentTabData.map((item) => (
-                    <ProjectsItem item={item} />
+                    <ProjectsItem key={item.id} item={item} />
                 ))}
             </div>
         </>

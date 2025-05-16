@@ -44,10 +44,14 @@
     flex-direction: column;
     gap: 15px;
 }
-  .guide-section__title-wrapper {
+.guide-section__title-wrapper {
     display: flex;
-    gap: 15px;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 15px;
-  }
+}
+
+.guide-section__buttons {
+    display: flex;
+    gap: 10px;
+}

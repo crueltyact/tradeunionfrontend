@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./GuideModal.css"; 
 import Button from "../UI/Button/Button"
 import APIService from "../../API/APIService";
+import MarkdownEditor from "../MarkdownEditor/MarkdownEditor";
 
 const GuideModal = ({ isOpen, onClose, guideId, mode = 'add-section' }) => {
   const [type, setType] = useState('student');
@@ -54,11 +55,8 @@ const GuideModal = ({ isOpen, onClose, guideId, mode = 'add-section' }) => {
         setTitle('');
         setContent('');
     };
-  const handleClose = () => {
-    setType('student');
-    setLabel('');
-    setTitle('');
-    setContent('');
+  const handleClose = (e) => {
+    e.preventDefault();
     onClose();
   };
 
@@ -87,18 +85,18 @@ const GuideModal = ({ isOpen, onClose, guideId, mode = 'add-section' }) => {
 
                 <div className="form-group">
                   <label htmlFor="label">Заголовок:</label>
-                  <input type="text" value={label} onChange={(e) => setLabel(e.target.value)} required />
+                  <MarkdownEditor value={label} onChange={setLabel} />
                 </div>
               </>
             }
 
             <div className="form-group">
               <label htmlFor="title">Тема:</label>
-              <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
+              <MarkdownEditor value={title} onChange={setTitle} />
             </div>
             <div className="form-group">
               <label htmlFor="content">Содержание:</label>
-              <textarea value={content} onChange={(e) => setContent(e.target.value)} required />
+              <MarkdownEditor value={content} onChange={setContent} />
             </div>
 
           </div>
