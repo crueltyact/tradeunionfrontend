@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./ChatModal.css";
 import APIService from "../../API/APIService";
+import { motion, AnimatePresence } from "framer-motion";
 
 const ChatModal = ({ onClose }) => {
     const [ticketNumber, setTicketNumber] = useState("");
@@ -98,64 +99,98 @@ const ChatModal = ({ onClose }) => {
     };
 
   return (
-    <div className="chat-modal">
-        <div className="chat-modal__content">
-            <h2 className="chat-modal__title">Чат с сотрудником профсоюза</h2>
-            {!chatStarted ? (
-            <>
-                <label htmlFor="ticketNumber">Номер профбилета:</label>
-                <input
-                    type="text"
-                    value={ticketNumber}
-                    onChange={(e) => setTicketNumber(e.target.value)}
-                    placeholder="Номер профбилета"
-                />
-                <button className="chat-modal__start-button" onClick={handleStartChat}>Начать чат</button>
-            </>
-        ) : (
-            <div className="chat-modal__content-wrapper">
-                {worker && (
-                    <div className="chat-worker-info">
-                        <img className="worker-avatar" src="/user.svg" alt="worker" />
-                        {worker.second_name} {worker.first_name} {worker.patronymic}
-                    </div>
-                )}
-
-                <div className="chat-messages">
-                    {prevMessages.map((msg, idx) => (
-                        <div key={idx} className={`message-bubble ${msg.role === "client" ? "user-message" : "worker-message"}`}>
-                            {msg.content}
-                        </div>
-                    ))}
-                    {messages.map((msg, idx) => (
-                        <div key={idx} className={`message-bubble ${msg.role === "client" ? "user-message" : "worker-message"}`}>
-                            {msg.content}
-                        </div>
-                    ))}
-                </div>
-
-                <div className="chat-input">
-                    <textarea
-                        value={inputMessage}
-                        onChange={(e) => {
-                            setInputMessage(e.target.value)
-                            e.target.style.height = "auto";
-                            e.target.style.height = e.target.scrollHeight + "px";
-                        } }
-                        placeholder="Сообщение..."
-                        onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-                        className="message-input"
-                    />
-                    <button onClick={sendMessage}>Отправить</button>
-                </div>
+    <AnimatePresence mode="wait">
+        <motion.div 
+            className="chat-modal"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.3 }}
+        >
+            <div className="chat-modal__header">
+                <h2 className="chat-modal__title">Чат с сотрудником профсоюза</h2>
+                <button onClick={onClose} className="close-button">
+                    ✕
+                </button>
             </div>
-                
-            )}
-            <button onClick={onClose} className="close-button">
-                ✕
-            </button>
-        </div>
-    </div>
+            <motion.div 
+                className="chat-modal__content"
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+                <div className="chat-modal__inner">
+                    {!chatStarted ? (
+                    <motion.div
+                        style={{ display: "flex", flexDirection: "column" }}
+                        key="start"
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.4 }}
+                    >
+                        <label htmlFor="ticketNumber">Номер профбилета:</label>
+                        <input
+                            type="text"
+                            value={ticketNumber}
+                            onChange={(e) => setTicketNumber(e.target.value)}
+                            onKeyDown={(e) => e.key === "Enter" && handleStartChat()}
+                            placeholder="Номер профбилета"
+                        />
+                        <button className="chat-modal__start-button" onClick={handleStartChat}>Начать чат</button>
+                    </motion.div>
+                ) : (
+                    <motion.div
+                        key="chat"
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.4 }}
+                        className="chat-modal__content-wrapper" 
+                    >
+                        {worker && (
+                            <div className="chat-worker-info">
+                                <img className="worker-avatar" src="/user.svg" alt="worker" />
+                                {worker.second_name} {worker.first_name}
+                            </div>
+                        )}
+
+                        <div className="chat-messages">
+                            {prevMessages && prevMessages.map((msg, idx) => (
+                                <div key={idx} className={`message-bubble ${msg.role === "client" ? "user-message" : "worker-message"}`}>
+                                    {msg.content}
+                                </div>
+                            ))}
+                            {messages.map((msg, idx) => (
+                                <div key={idx} className={`message-bubble ${msg.role === "client" ? "user-message" : "worker-message"}`}>
+                                    {msg.content}
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="chat-input">
+                            <textarea
+                                value={inputMessage}
+                                onChange={(e) => {
+                                    setInputMessage(e.target.value)
+                                    e.target.style.height = "auto";
+                                    e.target.style.height = e.target.scrollHeight + "px";
+                                } }
+                                placeholder="Сообщение..."
+                                onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+                                className="message-input"
+                            />
+                            <button onClick={sendMessage}>Отправить</button>
+                        </div>
+                    </motion.div>
+                        
+                    )}
+                </div>
+
+            </motion.div>
+        </motion.div>
+    </AnimatePresence>
   );
 };
 

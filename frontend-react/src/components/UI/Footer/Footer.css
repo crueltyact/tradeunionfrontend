@@ -1,7 +1,6 @@
 .footer {
     background-color: #F4F5F6;
     padding: 40px 0 12px 0;
-    font-family: sans-serif;
     font-size: 16px;
     color: #353945;
 }
@@ -40,6 +39,7 @@
   .footer__section a {
     display: inline-block;
     color: #353945;
+    font-weight: 300;
     text-decoration: none;
   }
   
@@ -50,6 +50,7 @@
   .footer__section-address {
     max-width: 265px;
     line-height: 1.5;
+    font-weight: 300;
     white-space: normal;       
     word-break: break-word;
     transition: opacity 0.3s ease;
@@ -77,6 +78,7 @@
   
   .footer__bottom {
     text-align: left;
+    font-weight: 300;
     color: #95A1BB;
     font-size: 14px;
   }

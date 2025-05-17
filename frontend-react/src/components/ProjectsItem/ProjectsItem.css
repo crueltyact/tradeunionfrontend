@@ -1,14 +1,15 @@
 .project-card__content {
-    font-family: sans-serif;
     margin-top: 15px;
     padding: 0 20px;
 }
 
 .project-card__content-title {
     font-size: 24px;
+    font-weight: 600;
     margin-bottom: 5px;
 }
 
 .project-card__content-description {
     font-size: 20px;
+    font-weight: 400;
 }

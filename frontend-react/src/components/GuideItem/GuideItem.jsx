@@ -8,20 +8,17 @@ const GuideItem = (props) => {
     const [isOpen, setIsOpen] = useState(false);
     return (
       <li className={`guide-theme ${isOpen ? "open" : ""}`}>
-        <div className="guide-theme__icon-container">
+        <div onClick={() => setIsOpen(!isOpen)} className="guide-theme__icon-container">
             <span
-            onClick={() => setIsOpen(!isOpen)}
-            className={`icon ${isOpen ? "open" : ""}`}
+                className={`icon ${isOpen ? "open" : ""}`}
             >
             <span />
             <span />
             </span>
         </div>
-        <div onClick={() => setIsOpen(!isOpen)} className="guide-theme__block">
-            <h4 style={{cursor: "pointer"}}>
-                <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
-                    {props.theme.title}
-                </ReactMarkdown>
+        <div className="guide-theme__block">
+            <h4 onClick={() => setIsOpen(!isOpen)} style={{cursor: "pointer", fontWeight: "800"}}>
+                {props.theme.title}
             </h4>
             <AnimatePresence initial={false}>
                 {isOpen && (

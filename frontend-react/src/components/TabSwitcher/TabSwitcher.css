@@ -5,7 +5,6 @@
 
 .tab-content {
     padding: 50px 0;
-    font-family: sans-serif;
 }
 
 .tab-content__inner {
@@ -21,4 +20,5 @@
 
 .tab-content__description {
     font-size: 22px;
+    font-weight: 400;
 }

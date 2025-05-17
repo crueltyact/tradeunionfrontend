@@ -24,7 +24,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-weight: 800;
+    font-weight: 700;
     font-size: 32px;
     text-align: center;
     border: 2px solid #000;
@@ -72,12 +72,14 @@
   }
   
   .front {
+    font-weight: 700;
     opacity: 1;
     z-index: 2;
   }
   
   .back {
     font-size: 25px;
+    font-weight: 700;
     opacity: 0;
     z-index: 1;
   }
@@ -91,15 +93,13 @@
   }
   
   .news__title {
-    font-family: sans-serif;
     margin-bottom: 50px;
     text-align: center;
     font-size: 36px;
-    font-weight: 800;
+    font-weight: 700;
   }
 
   .partners {
-    font-family: sans-serif;
     padding: 50px 0;
   }
 
@@ -107,7 +107,7 @@
     margin-bottom: 50px;
     text-align: center;
     font-size: 36px;
-    font-weight: 800;
+    font-weight: 700;
   }
 
   .partners__content {

@@ -2,7 +2,7 @@
   width: 100%;
   padding: 25px 0;
   font-size: 32px;
-  font-weight: 600;
+  font-weight: 500;
   background-color: var(--btn-color);
   color: #FCFCFD;
   border: 2px solid transparent;
@@ -10,14 +10,12 @@
   transition: all 0.3s ease;
 }
 
-/* Наведение */
 .tab-button:hover {
   background-color: #FCFCFD;
   color: var(--btn-color);
   border-color: var(--btn-color);
 }
 
-/* Активная */
 .tab-button.active {
   background-color: #FCFCFD;
   color: var(--btn-color);
