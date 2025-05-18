@@ -13,6 +13,7 @@ const ChatModal = ({ onClose }) => {
     const [socket, setSocket] = useState(null);
     const [worker, setWorker] = useState(null);
     const [prevMessages, setPrevMessages] = useState([]);
+    const [warnMessages, setWarnMessages] = useState([]);
     const messagesEndRef = useRef(null);
 
     useEffect(() => {
@@ -42,9 +43,10 @@ const ChatModal = ({ onClose }) => {
         if (messagesEndRef.current) {
             messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
         }
-    }, [socket, messages, prevMessages]); 
+    }, [socket, messages, prevMessages, warnMessages]); 
 
   const handleStartChat = async () => {
+    setWarnMessages([]);
     try {
         const response = await APIService.startChat(ticketNumber);
         if (!response) throw new Error("Не удалось создать чат");
@@ -69,8 +71,10 @@ const ChatModal = ({ onClose }) => {
     const sendMessage = () => {
         if (!inputMessage.trim()) return;
 
-        if (!socket || socket.readyState !== WebSocket.OPEN) {
+        if (socket.onclose ||!socket || socket.readyState !== WebSocket.OPEN) {
             console.warn("Сокет не готов для отправки");
+            setWarnMessages((prev) => [...prev, "Чат завершён или недоступен"]);
+            setInputMessage("");
             return;
         }
 
@@ -150,9 +154,14 @@ const ChatModal = ({ onClose }) => {
                                     {msg.content}
                                 </div>
                             ))}
-                            {messages.map((msg, idx) => (
+                            {messages && messages.map((msg, idx) => (
                                 <div key={idx} className={`message-bubble ${msg.role === "client" ? "user-message" : "worker-message"}`}>
                                     {msg.content}
+                                </div>
+                            ))}
+                            {warnMessages && warnMessages.map((msg, idx) => (
+                                <div key={`warn-${idx}`} className="message-bubble user-message">
+                                    {msg}
                                 </div>
                             ))}
                             <div ref={messagesEndRef} />
@@ -167,7 +176,12 @@ const ChatModal = ({ onClose }) => {
                                     e.target.style.height = e.target.scrollHeight + "px";
                                 } }
                                 placeholder="Сообщение..."
-                                onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter" && !e.shiftKey) {
+                                        e.preventDefault();
+                                        sendMessage();
+                                    }
+                                }}
                                 className="message-input"
                             />
                             <button onClick={sendMessage}>Отправить</button>

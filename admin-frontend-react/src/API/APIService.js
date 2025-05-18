@@ -153,4 +153,8 @@ export default class APIService {
         const response = await apiClient.get('/admin/v1/chat/');
         return response;
     }
+    static async deleteUserChat(id) {
+        const response = await apiClient.delete('/admin/v1/chat/' + id);
+        return response;
+    }
 }

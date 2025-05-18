@@ -75,6 +75,17 @@ const Chat = () => {
     setInput("");
   };
 
+  const closeChat = async (chat_id) => {
+    if (socket) {
+      const payload = { content: "Системное сообщение: чат завершён" };
+      socket.send(JSON.stringify(payload));
+      socket.close();
+    }
+    await APIService.deleteUserChat(chat_id);
+    setActiveChat(null);
+    fetchChats();
+  }
+
   return (
     <>
     <div className="container admin-chat-page_inner">
@@ -132,7 +143,10 @@ const Chat = () => {
                         }
                         }}
                     />
-                    <button onClick={sendMessage}>Отправить</button>
+                    <div className="chat-buttons">
+                      <button className="end-chat" onClick={() => closeChat(activeChat.chat_id)}>Завершить</button>
+                      <button className="send-message" onClick={sendMessage}>Отправить</button>
+                    </div>
                     </div>
                 </>
                 ) : (
