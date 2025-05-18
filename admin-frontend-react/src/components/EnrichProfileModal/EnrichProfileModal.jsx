@@ -1,17 +1,14 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import "./EnrichProfileModal.css"; 
 import Button from "../UI/Button/Button"
 import APIService from "../../API/APIService";
 import AuthContext from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
 
 const EnrichProfileModal = ({ isOpen, onClose, onProfileFilled }) => {
     const [firstName, setFirstName] = useState("");
     const [secondName, setSecondName] = useState("");
     const [patronymic, setPatronymic] = useState("");
     const [error, setError] = useState("");
-    const { logout } = useContext(AuthContext);
-    const navigate = useNavigate();
 
     if (!isOpen) return null;
 
@@ -26,8 +23,8 @@ const EnrichProfileModal = ({ isOpen, onClose, onProfileFilled }) => {
 
       try {
           const formData = new FormData();
-          formData.append("firstName", firstName);
-          formData.append("lastName", secondName);
+          formData.append("first_name", firstName);
+          formData.append("second_name", secondName);
           formData.append("patronymic", patronymic);
           await APIService.enrichProfile(formData);
           onProfileFilled();
@@ -37,13 +34,11 @@ const EnrichProfileModal = ({ isOpen, onClose, onProfileFilled }) => {
         }
     };
     const handleClose = () => {
-        setFirstName("");
-        setSecondName("");
-        setPatronymic("");
-        setError("");
-        logout();
-        onClose();
-        navigate('/login');
+      setFirstName("");
+      setSecondName("");
+      setPatronymic("");
+      setError("");
+      onClose();
     };
 
   return (

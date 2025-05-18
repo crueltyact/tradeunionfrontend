@@ -2,11 +2,13 @@ import "./InviteUser.css"
 import React, { useState } from "react";
 import APIService from "../../API/APIService";
 import Button from "../UI/Button/Button";
+import EnrichProfileModal from "../EnrichProfileModal/EnrichProfileModal";
 
 const InviteUser = () => {
     const [role, setRole] = useState('admin');
     const [inviteToken, setInviteToken] = useState('');
     const [error, setError] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -22,11 +24,22 @@ const InviteUser = () => {
 
         } catch (err) {
             console.error(err);
-            setError('Ошибка получения токена');
+            if (err.status === 403) {
+                setError('Заполните ваши персональные данные');
+                setIsModalOpen(true);
+            } else {
+                setError('Ошибка получения токена');
+            }
         }
     };
 
+    const handleProfileFilled = () => {
+        setIsModalOpen(false);
+        setError('');
+    };
+
     return (
+        <>
         <section className="invite">
             <div className="container invite__inner">
                 <h2 className="invite__title">Генерация токена</h2>
@@ -55,6 +68,12 @@ const InviteUser = () => {
                     </form>
             </div>
         </section>
+        <EnrichProfileModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            onProfileFilled={handleProfileFilled}
+        />
+        </>
     );
 };
 

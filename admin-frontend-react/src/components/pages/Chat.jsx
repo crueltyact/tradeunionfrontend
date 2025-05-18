@@ -3,8 +3,9 @@ import "./Chat.css";
 import APIService from "../../API/APIService";
 import { useFetching } from "../hooks/UseFetching";
 import Loader from "../Loader/Loader";
-
+import EnrichProfileModal from "../EnrichProfileModal/EnrichProfileModal";
 const Chat = () => {
+  const [isEnrichModalOpen, setIsEnrichModalOpen] = useState(false);
   const [chats, setChats] = useState([]);
   const [activeChat, setActiveChat] = useState(null);
   const [socket, setSocket] = useState(null);
@@ -15,6 +16,10 @@ const Chat = () => {
         const response = await APIService.getUserChats();
         setChats(response.data.chats);
     } catch (error) {
+        if (error.status === 403) {
+            alert("Заполните персональные данные");
+            setIsEnrichModalOpen(true);
+        }
         console.error("Ошибка получения чатов:", error);
     }
 
@@ -24,6 +29,10 @@ const Chat = () => {
 
     fetchChats();
   }, []);
+
+  const handleProfileFilled = () => {
+    setIsEnrichModalOpen(false);
+  };
 
   const connectToChat = (chat) => {
     if (socket) socket.close();
@@ -55,6 +64,7 @@ const Chat = () => {
   };
 
   return (
+    <>
     <div className="container admin-chat-page_inner">
         <div className="admin-chat-page">
             <aside className="chat-sidebar">
@@ -64,7 +74,7 @@ const Chat = () => {
                         ? 
                         <Loader /> 
                         :
-                        chats.map((chat) => (
+                        chats && chats.map((chat) => (
                             <li
                             key={chat.chat_id}
                             className={activeChat?.chat_id === chat.chat_id ? "active" : ""}
@@ -118,7 +128,12 @@ const Chat = () => {
             </main>
         </div>
     </div>
-    
+    <EnrichProfileModal
+        isOpen={isEnrichModalOpen}
+        onClose={() => setIsEnrichModalOpen(false)}
+        onProfileFilled={handleProfileFilled}
+    />
+    </>
   );
 };
 

@@ -6,8 +6,10 @@ import { useEffect, useState } from "react";
 import ProjectsItem from "../ProjectsItem/ProjectsItem";
 import Button from "../UI/Button/Button";
 import ProjectsModal from "../ProjectsModal/ProjectsModal";
+import EnrichProfileModal from "../EnrichProfileModal/EnrichProfileModal";
 
 const Projects = () => {
+    const [isEnrichModalOpen, setIsEnrichModalOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [projects, setProjects] = useState({ worker: [], student: [] })
     const [fetchProjects, isLoading, error] = useFetching(async () => {
@@ -25,8 +27,13 @@ const Projects = () => {
                 student: prev.student.filter(p => p.id !== id)
             }));
         } catch (error) {
+            if (error.status === 403) {
+                alert("Заполните персональные данные")
+                setIsEnrichModalOpen(true);
+            } else {
+                alert('Не удалось удалить проект');
+            }
             console.error('Ошибка при удалении проекта:', error);
-            alert('Не удалось удалить проект');
         }
     };
 
@@ -38,6 +45,9 @@ const Projects = () => {
         setIsModalOpen(false);
         fetchProjects();
     };
+    const handleProfileFilled = () => {
+        setIsEnrichModalOpen(false);
+    }
     return (
         <>
             <section className="projects">
@@ -51,21 +61,28 @@ const Projects = () => {
                         <div className="projects-lists">
                             <h2>Работнику</h2>
                             <div className="projects-list worker">
-                                {projects.worker.map((item) => (   
+                                {projects.worker && projects.worker.map((item) => (   
                                     <ProjectsItem key={item.id} item={item} onDelete={handleDeleteProject} />
                                 ))}
+                                {!projects.worker && <p>Проекты не найдены</p>}
                             </div>
                             <h2>Обучающемуся</h2>
                             <div className="projects-list student">
-                                {projects.student.map((item) => (
+                                {projects.student && projects.student.map((item) => (
                                     <ProjectsItem key={item.id} item={item} onDelete={handleDeleteProject} />
                                 ))}
+                                {!projects.student && <p>Проекты не найдены</p>}
                             </div>
                         </div>
                     }
                 </div>
             </section>
             <ProjectsModal isOpen={isModalOpen} onClose={closeModal} />
+            <EnrichProfileModal
+                isOpen={isEnrichModalOpen}
+                onClose={() => setIsEnrichModalOpen(false)}
+                onProfileFilled={handleProfileFilled}
+            />
         </>
     );
   }

@@ -6,8 +6,9 @@ import { useEffect, useState } from "react";
 import GuideItem from "../GuideItem/GuideItem"
 import Button from "../UI/Button/Button"
 import GuideModal from "../GuideModal/GuideModal"
-
+import EnrichProfileModal from "../EnrichProfileModal/EnrichProfileModal";
 const Guide = () => {
+    const [isEnrichModalOpen, setIsEnrichModalOpen] = useState(false);
     const [guides, setGuides] = useState({ worker: [], student: [] });
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalMode, setModalMode] = useState("add-section");
@@ -29,8 +30,13 @@ const Guide = () => {
                 student: prev.student.filter(section => section.id !== sectionId)
             }));
         } catch (error) {
+            if (error.status === 403) {
+                alert("Заполните персональные данные")
+                setIsEnrichModalOpen(true);
+            } else {
+                alert('Не удалось удалить раздел');
+            }
             console.error('Ошибка при удалении раздела:', error);
-            alert('Не удалось удалить раздел');
         }
     };
 
@@ -64,6 +70,10 @@ const Guide = () => {
         setIsModalOpen(false);
         fetchGuides(); 
     };
+    const handleProfileFilled = () => {
+        setIsEnrichModalOpen(false);
+        fetchGuides();
+    };
     return (
         <>
             <section className="guides">
@@ -77,7 +87,7 @@ const Guide = () => {
                         <div className="guide-lists">
                             <h2>Работнику</h2>
                             <div className="guide-list worker">
-                                {guides.worker.map((section) => (
+                                {guides.worker && guides.worker.map((section) => (
                                     <div key={section.id} className="guide-section">
                                         <div className="guide-section__title-wrapper">
                                             <h3 style={{fontSize: "24px"}}>{section.label}</h3>
@@ -87,16 +97,18 @@ const Guide = () => {
                                             </div>
                                         </div>
                                         <ul className="guide-themes">
-                                        {section.themes.map((theme) => (
+                                        {section.themes && section.themes.map((theme) => (
                                             <GuideItem key={theme.id} theme={theme} onDelete={() => handleDeleteTheme("worker", section.id, theme.id)} />
                                         ))}
+                                        {!section.themes && <p>Темы не найдены</p>}
                                         </ul>
                                     </div>
                                 ))}
+                                {!guides.worker && <p>Разделы не найдены</p>}
                             </div>
                             <h2>Обучающемуся</h2>
                             <div className="guide-list student">
-                                {guides.student.map((section) => (
+                                {guides.student && guides.student.map((section) => (
                                     <div key={section.id} className="guide-section">
                                         <div className="guide-section__title-wrapper">
                                             <h3 style={{fontSize: "24px"}}>{section.label}</h3>
@@ -106,18 +118,25 @@ const Guide = () => {
                                             </div> 
                                         </div>
                                         <ul className="guide-themes">
-                                            {section.themes.map((theme) => (
+                                            {section.themes && section.themes.map((theme) => (
                                                 <GuideItem key={theme.id} theme={theme} onDelete={() => handleDeleteTheme("student", section.id, theme.id)} />
                                             ))}
+                                            {!section.themes && <p>Темы не найдены</p>}
                                         </ul>
                                     </div>
                                 ))}
+                                {!guides.student && <p>Разделы не найдены</p>}
                             </div>
                         </div>
                     }
                 </div>
             </section>
             <GuideModal isOpen={isModalOpen} onClose={closeModal} guideId={currentGuideId} mode={modalMode} />
+            <EnrichProfileModal 
+                isOpen={isEnrichModalOpen} 
+                onClose={() => setIsEnrichModalOpen(false)} 
+                onProfileFilled={handleProfileFilled} 
+            />
         </>
     );
   }

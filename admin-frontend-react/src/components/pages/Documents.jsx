@@ -6,7 +6,6 @@ import { useFetching } from "../hooks/UseFetching";
 import { useEffect, useState } from "react";
 import DocumentItem from "../DocumentItem/DocumentItem"
 import DocumentModal from "../DocumentModal/DocumentModal"
-
 const Documents = () => {
     const [documents, setDocuments] = useState([])
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -47,15 +46,17 @@ const Documents = () => {
                         <div className="document-lists">
                             <h2>Работнику</h2>
                             <div className="document-list worker">
-                                {filteredDocs.worker.map((document) => (
+                                {filteredDocs.worker && filteredDocs.worker.map((document) => (
                                     <DocumentItem key={document.ID} onDelete={handleDeleteDocument} document={document} />
                                 ))}
+                                {!filteredDocs.worker && <p>Документы не найдены</p>}
                             </div>
                             <h2>Обучающемуся</h2>
                             <div className="document-list student">
-                                {filteredDocs.student.map((document) => (
+                                {filteredDocs.student && filteredDocs.student.map((document) => (
                                     <DocumentItem key={document.ID} onDelete={handleDeleteDocument} document={document} />
                                 ))}
+                                {!filteredDocs.student && <p>Документы не найдены</p>}
                             </div>
                         </div>
                     }

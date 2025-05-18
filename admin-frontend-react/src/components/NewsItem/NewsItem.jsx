@@ -2,9 +2,7 @@ import "./NewsItem.css"
 import Button from "../UI/Button/Button";
 const NewsItem = (props) => {
     const handleDelete = () => {
-        if (window.confirm('Вы уверены, что хотите удалить новость?')) {
-            props.onDelete(props.item.id);
-        }
+        props.onDelete(props.item.id);
     };
     return (
         <>

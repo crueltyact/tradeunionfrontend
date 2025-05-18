@@ -6,8 +6,9 @@ import Loader from "../Loader/Loader"
 import NewsItem from "../NewsItem/NewsItem";
 import Button from "../UI/Button/Button";
 import NewsModal from "../NewsModal/NewsModal";
-
+import EnrichProfileModal from "../EnrichProfileModal/EnrichProfileModal";
 const News = () => {
+    const [isEnrichModalOpen, setIsEnrichModalOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [news, setNews] = useState([])
     const [fetchNews, isLoading, error] = useFetching(async () => {
@@ -24,8 +25,13 @@ const News = () => {
             await APIService.deleteNews(id);
             setNews((prev) => prev.filter(n => n.id !== id));
         } catch (error) {
+            if (error.status === 403) {
+                alert("Заполните персональные данные")
+                setIsEnrichModalOpen(true);
+            } else {
+                alert('Не удалось удалить новость');
+            }
             console.error('Ошибка при удалении новости:', error);
-            alert('Не удалось удалить новость');
         }
     };
     const openModal = () => {
@@ -35,6 +41,9 @@ const News = () => {
     const closeModal = () => {
         setIsModalOpen(false);
         fetchNews();
+    };
+    const handleProfileFilled = () => {
+        setIsEnrichModalOpen(false);
     };
     return (
         <>
@@ -47,14 +56,20 @@ const News = () => {
                         <Loader />
                         :
                         <div className="news-list">
-                            {news.map((item) => (
+                            {news && news.map((item) => (
                                 <NewsItem key={item.id} item={item} onDelete={handleDeleteNews} />
                             ))}
+                            {!news && <h2>Новости не найдены!</h2>}
                         </div>
                     }
                 </div>
             </section>
             <NewsModal isOpen={isModalOpen} onClose={closeModal} />
+            <EnrichProfileModal
+                isOpen={isEnrichModalOpen}
+                onClose={() => setIsEnrichModalOpen(false)}
+                onProfileFilled={handleProfileFilled}
+            />
         </>
     );
   }

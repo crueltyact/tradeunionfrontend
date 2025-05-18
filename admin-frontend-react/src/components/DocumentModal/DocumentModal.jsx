@@ -1,11 +1,13 @@
 import React, { useState, useRef } from "react";
-import "./DocumentModal.css"; // Стили для модалки
+import "./DocumentModal.css";
 import Button from "../UI/Button/Button"
 import APIService from "../../API/APIService";
+import EnrichProfileModal from "../EnrichProfileModal/EnrichProfileModal";
 
 const DocumentModal = ({ isOpen, onClose }) => {
-    const [documentType, setDocumentType] = useState("student"); // Выбранная роль
-    const [selectedFiles, setSelectedFiles] = useState([]); // Выбранный файл
+    const [isEnrichModalOpen, setIsEnrichModalOpen] = useState(false);
+    const [documentType, setDocumentType] = useState("student"); 
+    const [selectedFiles, setSelectedFiles] = useState([]); 
     const fileInputRef = useRef(null);
     const handleFileChange = (e) => {
       const files = Array.from(e.target.files);
@@ -48,7 +50,12 @@ const DocumentModal = ({ isOpen, onClose }) => {
             setSelectedFiles([]);
             onClose();
         } catch (error) {
-            alert('Не удалось загрузить документы');
+            if (error.status === 403) {
+                alert("Заполните персональные данные")
+                setIsEnrichModalOpen(true);
+            } else {
+               alert('Не удалось загрузить документы');
+            }
             console.error('Ошибка загрузки:', error);
         } finally {
             if (fileInputRef.current) {
@@ -56,6 +63,10 @@ const DocumentModal = ({ isOpen, onClose }) => {
             }
         }
     };
+  
+  const handleProfileFilled = () => {
+      setIsEnrichModalOpen(false);
+  };
 
   const handleClose = () => {
     // setSelectedFiles([])
@@ -66,6 +77,7 @@ const DocumentModal = ({ isOpen, onClose }) => {
   };
 
   return (
+    <>
     <div className={`modal ${isOpen ? "open" : ""}`}>
       <div className="modal-content">
         <h2 style={{textAlign: "center", marginBottom: "10px"}}>Добавление документа</h2>
@@ -110,6 +122,12 @@ const DocumentModal = ({ isOpen, onClose }) => {
         </button>
       </div>
     </div>
+    <EnrichProfileModal
+        isOpen={isEnrichModalOpen}
+        onClose={() => setIsEnrichModalOpen(false)}
+        onProfileFilled={handleProfileFilled}
+    />
+    </>
   );
 };
 

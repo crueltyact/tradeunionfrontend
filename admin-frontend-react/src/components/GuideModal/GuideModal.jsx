@@ -3,8 +3,10 @@ import "./GuideModal.css";
 import Button from "../UI/Button/Button"
 import APIService from "../../API/APIService";
 import MarkdownEditor from "../MarkdownEditor/MarkdownEditor";
+import EnrichProfileModal from "../EnrichProfileModal/EnrichProfileModal";
 
 const GuideModal = ({ isOpen, onClose, guideId, mode = 'add-section' }) => {
+  const [isEnrichModalOpen, setIsEnrichModalOpen] = useState(false);
   const [type, setType] = useState('student');
   const [label, setLabel] = useState('');
   const [title, setTitle] = useState('');
@@ -32,8 +34,13 @@ const GuideModal = ({ isOpen, onClose, guideId, mode = 'add-section' }) => {
 
               onClose();
           } catch (error) {
+              if (error.status === 403) {
+                alert("Заполните персональные данные")
+                setIsEnrichModalOpen(true);
+              } else {
+                alert('Не удалось добавить справочник');
+              }
               console.error('Ошибка при создании справочника:', error);
-              alert('Не удалось добавить справочник');
           }
         } else if (mode === "add-theme" && guideId) {
             if (!title || !content) {
@@ -45,8 +52,13 @@ const GuideModal = ({ isOpen, onClose, guideId, mode = 'add-section' }) => {
                 await APIService.addThemeToGuide(guideId, title, content);
                 onClose();
             } catch (error) {
+                if (error.status === 403) {
+                  alert("Заполните персональные данные")
+                  setIsEnrichModalOpen(true);
+                } else {
+                  alert('Не удалось добавить тему');
+                }
                 console.error("Ошибка при добавлении темы:", error);
-                alert("Не удалось добавить тему");
             }
         } 
 
@@ -60,7 +72,12 @@ const GuideModal = ({ isOpen, onClose, guideId, mode = 'add-section' }) => {
     onClose();
   };
 
+  const handleProfileFilled = () => {
+    setIsEnrichModalOpen(true);
+  };
+
   return (
+    <>
     <div className={`modal ${isOpen ? "open" : ""}`}>
       <div className="modal-content">
         <h2 style={{textAlign: "center", marginBottom: "10px"}}>
@@ -110,6 +127,12 @@ const GuideModal = ({ isOpen, onClose, guideId, mode = 'add-section' }) => {
         </button>
       </div>
     </div>
+    <EnrichProfileModal 
+      isOpen={isEnrichModalOpen} 
+      onClose={() => setIsEnrichModalOpen(false)} 
+      onProfileFilled={handleProfileFilled} 
+    />
+    </>
   );
 };
 

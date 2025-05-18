@@ -3,8 +3,10 @@ import "./NewsModal.css";
 import Button from "../UI/Button/Button"
 import APIService from "../../API/APIService";
 import MarkdownEditor from "../MarkdownEditor/MarkdownEditor";
+import EnrichProfileModal from "../EnrichProfileModal/EnrichProfileModal";
 
 const NewsModal = ({ isOpen, onClose }) => {
+  const [isEnrichModalOpen, setIsEnrichModalOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [image, setImage] = useState(null);
@@ -36,8 +38,13 @@ const NewsModal = ({ isOpen, onClose }) => {
         }
         onClose();
     } catch (error) {
+        if (error.status === 403) {
+            alert("Заполните персональные данные")
+            setIsEnrichModalOpen(true);
+        } else {
+            alert('Не удалось добавить новость');
+        }
         console.error('Ошибка при создании новости:', error);
-        alert('Не удалось добавить новость');
     }
   };
   const handleClose = () => {
@@ -56,8 +63,12 @@ const NewsModal = ({ isOpen, onClose }) => {
     }
     setImage(file);
   };
+  const handleProfileFilled = () => {
+    setEnrichModalOpen(false);
+  };
 
   return (
+    <>
     <div className={`modal ${isOpen ? "open" : ""}`}>
       <div className="modal-content">
         <h2 style={{textAlign: "center", marginBottom: "10px"}}>Добавление новости</h2>
@@ -67,23 +78,11 @@ const NewsModal = ({ isOpen, onClose }) => {
             <div className="form-group">
               <label htmlFor="title">Заголовок:</label>
               <MarkdownEditor value={title} onChange={setTitle} onSubmit={handleSubmit} />
-              {/* <AutoResizingTextarea
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                minRows={2}
-                maxRows={10}
-              /> */}
             </div>
 
             <div className="form-group">
               <label htmlFor="content">Содержание:</label>
               <MarkdownEditor value={content} onChange={setContent} />
-              {/* <AutoResizingTextarea
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                minRows={3}
-                maxRows={10}
-              /> */}
             </div>
             
             <div className="form-group">
@@ -106,6 +105,12 @@ const NewsModal = ({ isOpen, onClose }) => {
         </button>
       </div>
     </div>
+    <EnrichProfileModal
+      isOpen={isEnrichModalOpen}
+      onClose={() => setIsEnrichModalOpen(false)}
+      onProfileFilled={handleProfileFilled}
+    />
+    </>
   );
 };
 

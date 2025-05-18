@@ -3,8 +3,10 @@ import "./ProjectsModal.css";
 import Button from "../UI/Button/Button"
 import APIService from "../../API/APIService";
 import MarkdownEditor from "../MarkdownEditor/MarkdownEditor";
+import EnrichProfileModal from "../EnrichProfileModal/EnrichProfileModal";
 
 const ProjectsModal = ({ isOpen, onClose }) => {
+  const [isEnrichModalOpen, setIsEnrichModalOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [type, setType] = useState('student');
@@ -40,12 +42,20 @@ const ProjectsModal = ({ isOpen, onClose }) => {
         }
         onClose();
     } catch (error) {
+        if (error.status === 403) {
+          alert("Заполните персональные данные")
+          setIsEnrichModalOpen(true);
+        } else {
+          alert('Не удалось добавить проект');
+        }
         console.error('Ошибка при создании проекта:', error);
-        alert('Не удалось добавить проект');
     }
   };
   const handleClose = () => {
     onClose();
+  };
+  const handleProfileFilled = () => {
+    setIsEnrichModalOpen(false);
   };
 
   const handleImageChange = (e) => {
@@ -66,6 +76,7 @@ const ProjectsModal = ({ isOpen, onClose }) => {
   };
 
   return (
+  <>
     <div className={`modal ${isOpen ? "open" : ""}`}>
       <div className="modal-content">
         <h2 style={{textAlign: "center", marginBottom: "10px"}}>Добавление проекта</h2>
@@ -115,6 +126,12 @@ const ProjectsModal = ({ isOpen, onClose }) => {
         </button>
       </div>
     </div>
+    <EnrichProfileModal
+      isOpen={isEnrichModalOpen}
+      onClose={() => setIsEnrichModalOpen(false)}
+      onProfileFilled={handleProfileFilled}
+    />
+  </>
   );
 };
 
