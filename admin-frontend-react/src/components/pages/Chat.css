@@ -1,6 +1,6 @@
 .admin-chat-page {
   display: flex;
-  height: 100vh;
+  height: 600px;
   font-family: sans-serif;
 }
 
@@ -27,6 +27,7 @@
 .chat-sidebar li.active {
   background-color: #e9ecef;
 }
+
 
 .chat-window {
   flex: 1;
