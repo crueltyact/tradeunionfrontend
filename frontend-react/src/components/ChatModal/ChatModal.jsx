@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./ChatModal.css";
 import APIService from "../../API/APIService";
 import { motion, AnimatePresence } from "framer-motion";
@@ -13,24 +13,9 @@ const ChatModal = ({ onClose }) => {
     const [socket, setSocket] = useState(null);
     const [worker, setWorker] = useState(null);
     const [prevMessages, setPrevMessages] = useState([]);
+    const messagesEndRef = useRef(null);
 
     useEffect(() => {
-        // const storedChatId = localStorage.getItem("chatId");
-        // const storedTicket = localStorage.getItem("ticketNumber");
-        // const storedWorker = localStorage.getItem("worker");
-
-        // if (storedChatId && storedTicket && storedWorker) {
-        //     setChatId(storedChatId);
-        //     setTicketNumber(storedTicket);
-        //     setWorker(JSON.parse(storedWorker));
-        //     setChatStarted(true);
-
-        //     const ws = new WebSocket(
-        //         `ws://82.202.156.164:8080/client/v1/chat/ws/${storedChatId}?tradeUnionID=${storedTicket}`
-        //     );
-
-        //     setSocket(ws);
-        // }
         if (socket) {
             socket.onopen = () => {
                 console.log("✅ WebSocket открыт");
@@ -54,7 +39,10 @@ const ChatModal = ({ onClose }) => {
                 console.error("WebSocket ошибка", err);
             };
         }
-    }, [socket]); 
+        if (messagesEndRef.current) {
+            messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+    }, [socket, messages, prevMessages]); 
 
   const handleStartChat = async () => {
     try {
@@ -167,6 +155,7 @@ const ChatModal = ({ onClose }) => {
                                     {msg.content}
                                 </div>
                             ))}
+                            <div ref={messagesEndRef} />
                         </div>
 
                         <div className="chat-input">

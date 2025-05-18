@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Chat.css";
 import APIService from "../../API/APIService";
 import { useFetching } from "../hooks/UseFetching";
@@ -11,6 +11,7 @@ const Chat = () => {
   const [socket, setSocket] = useState(null);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
+  const messagesEndRef = useRef(null); 
   const [fetchChats, isLoading, error] = useFetching(async () => {
     try {
         const response = await APIService.getUserChats();
@@ -26,9 +27,28 @@ const Chat = () => {
   });
 
   useEffect(() => {
-
     fetchChats();
-  }, []);
+    if (socket) {
+      socket.onmessage = (event) => {
+          try {
+          const msg = JSON.parse(event.data);
+          setMessages((prev) => [...prev, msg]);
+          } catch (e) {
+          console.error("Ошибка при разборе сообщения:", e);
+          }
+      };
+      socket.onclose = (event) => {
+          console.warn("🔒 WebSocket закрыт", event.code, event.reason);
+      };
+
+      socket.onerror = (err) => {
+          console.error("WebSocket ошибка", err);
+      };
+    }
+    if (messagesEndRef.current) {
+        messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [socket, messages]);
 
   const handleProfileFilled = () => {
     setIsEnrichModalOpen(false);
@@ -41,14 +61,6 @@ const Chat = () => {
     const ws = new WebSocket(
       `ws://82.202.156.164:8080/admin/v1/chat/ws/${chat.chat_id}?jwtToken=${encodeURIComponent(token)}`
     );
-
-    ws.onopen = () => console.log("✅ Подключено к чату:", chat.title);
-    ws.onmessage = (event) => {
-      const msg = JSON.parse(event.data);
-      setMessages((prev) => [...prev, msg]);
-    };
-    ws.onerror = (e) => console.error("WS ошибка", e);
-    ws.onclose = () => console.warn("Сокет закрыт");
 
     setSocket(ws);
     setMessages(chat.messages || []);
@@ -101,6 +113,7 @@ const Chat = () => {
                         {msg.content}
                         </div>
                     ))}
+                    <div ref={messagesEndRef} />
                     </div>
 
                     <div className="chat-input">
