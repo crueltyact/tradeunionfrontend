@@ -34,6 +34,7 @@ const ChatModal = ({ onClose }) => {
 
             socket.onclose = (event) => {
                 console.warn("🔒 WebSocket закрыт", event.code, event.reason);
+                setWarnMessages((prev) => [...prev, "Чат завершён или недоступен"]);
             };
 
             socket.onerror = (err) => {
@@ -71,7 +72,7 @@ const ChatModal = ({ onClose }) => {
     const sendMessage = () => {
         if (!inputMessage.trim()) return;
 
-        if (socket.onclose ||!socket || socket.readyState !== WebSocket.OPEN) {
+        if (!socket || socket.readyState !== WebSocket.OPEN) {
             console.warn("Сокет не готов для отправки");
             setWarnMessages((prev) => [...prev, "Чат завершён или недоступен"]);
             setInputMessage("");
@@ -143,7 +144,14 @@ const ChatModal = ({ onClose }) => {
                     >
                         {worker && (
                             <div className="chat-worker-info">
-                                <img className="worker-avatar" src="/user.svg" alt="worker" />
+                                {worker.iamge_url 
+                                    ?
+                                    <div style={{backgroundImage: `url(${worker.iamge_url})`}} className="worker__img">
+
+                                    </div> 
+                                    : 
+                                    <img className="worker-avatar" src="/user.svg" alt="worker" />
+                                }
                                 {worker.second_name} {worker.first_name}
                             </div>
                         )}

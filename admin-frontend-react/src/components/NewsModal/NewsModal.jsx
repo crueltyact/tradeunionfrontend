@@ -64,7 +64,7 @@ const NewsModal = ({ isOpen, onClose }) => {
     setImage(file);
   };
   const handleProfileFilled = () => {
-    setEnrichModalOpen(false);
+    setIsEnrichModalOpen(false);
   };
 
   return (

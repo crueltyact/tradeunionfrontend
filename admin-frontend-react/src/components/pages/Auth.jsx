@@ -39,6 +39,9 @@ const Auth = () => {
         } else {
             try {
                 const response = await APIService.register(login, password, inviteToken);
+                setLogin('');
+                setPassword('');
+                setInviteToken('');
                 if (response.status === 201 || response.status === 200) {
                     const loginResponse = await APIService.login(login, password);
                     const token = loginResponse.data.token;
