@@ -29,3 +29,21 @@
     background: #d12f40;
   }
   
+@media (max-width: 480px) {
+  .scroll-to-top {
+    bottom: 16px;
+    left: 12px;
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 380px) {
+  .scroll-to-top {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+    left: 10px;
+  }
+}

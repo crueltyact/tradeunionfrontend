@@ -27,7 +27,7 @@ const NewsIdPage = () => {
                 : 
                 <>  
                     <FadeInSection>
-                        <HeroSection title={newsItem.title} style={{ backgroundImage: `url("${newsItem.image_url}")`}} titleStyle={{maxWidth: "100%", textAlign: "center", fontSize: "48px"}} />
+                        <HeroSection title={newsItem.title} style={{ backgroundImage: `url("${newsItem.image_url}")`}} titleStyle={{maxWidth: "100%", textAlign: "center"}} />
                     </FadeInSection>
                     
                     <FadeInSection>

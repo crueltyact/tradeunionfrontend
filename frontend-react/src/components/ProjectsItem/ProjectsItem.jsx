@@ -9,7 +9,7 @@ const ProjectsItem = (props) => {
     return (
         <>
             <div onClick={() => setIsOpen(!isOpen)} className="project-card">
-                <img style={{width: "100%", cursor: "pointer", height: "300px"}} src={props.item.image_url} alt={props.item.title} />
+                <img style={{width: "100%", cursor: "pointer"}} src={props.item.image_url} alt={props.item.title} />
                 <AnimatePresence initial={false}>
                     {isOpen && (
                     <motion.div

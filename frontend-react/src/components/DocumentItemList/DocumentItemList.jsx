@@ -13,7 +13,7 @@ const DocumentItemList = ({ activeTab, documents }) => {
   return (
     <div className="document-list">
       {filteredDocs.map((document) => (
-        <DocumentItem document={document} />
+        <DocumentItem key={document.ID} document={document} />
       ))}
     </div>
   );

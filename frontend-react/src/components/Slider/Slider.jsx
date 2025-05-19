@@ -24,7 +24,23 @@ const Slider = () => {
             : 
             <Swiper 
                 modules={[Autoplay]}
-                slidesPerView={'auto'}
+                breakpoints={{
+                    0: {
+                    slidesPerView: 1,
+                    },
+                    576: {
+                    slidesPerView: 1.2,
+                    },
+                    768: {
+                    slidesPerView: 2,
+                    },
+                    992: {
+                    slidesPerView: 2,
+                    },
+                    1200: {
+                    slidesPerView: 2,
+                    },
+                }}
                 spaceBetween={0} 
                 loop={true}
                 autoplay={{

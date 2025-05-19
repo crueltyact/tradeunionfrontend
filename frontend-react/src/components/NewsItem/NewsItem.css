@@ -4,6 +4,11 @@
     height: 300px;
     width: 100%;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent; 
+    outline: none;
+  }
+  .items__card:focus {
+    outline: none;
   }
   
   .items__card::before {
@@ -73,7 +78,8 @@
     color: #FFE9B1;
   }
   
-  .items__card:hover .item__desc {
+  .items__card:hover .item__desc,
+  .items__card.touched .item__desc {
     opacity: 1;
   }
   
@@ -85,6 +91,53 @@
     transition: left 0.7s ease;
   }
   
-  .items__card:hover .item__date {
+  .items__card:hover .item__date,
+  .items__card.touched .item__date {
     left: calc(100% - 170px);
   }
+
+
+  @media (max-width: 992px) {
+  .item__overlay {
+    padding: 30px;
+    font-size: 24px;
+  }
+
+  .item__desc {
+    font-size: 16px;
+  }
+
+  .item__date {
+    font-size: 18px;
+    left: 30px;
+  }
+
+  .items__card:hover .item__date,
+  .items__card.touched .item__date {
+    left: calc(100% - 140px);
+  }
+}
+
+@media (max-width: 576px) {
+  .item__overlay {
+    padding: 20px;
+    font-size: 20px;
+  }
+
+  .item__desc {
+    font-size: 14px;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+  }
+
+  .item__date {
+    font-size: 16px;
+    bottom: 20px;
+    left: 20px;
+  }
+
+  .items__card:hover .item__date,
+  .items__card.touched .item__date {
+    left: calc(100% - 120px);
+  }
+}

@@ -47,3 +47,55 @@
     font-size: 24px;
     font-weight: 500;
 }
+
+@media (max-width: 992px) {
+  .hero {
+    display: flex;
+    align-items: center;
+    min-height: 400px;
+    max-height: 700px;
+    padding: 80px 0;
+  }
+  .hero__titles {
+    max-width: 90%;
+  }
+
+  .hero__title {
+    font-size: 42px;
+  }
+
+  .hero__subtitle {
+    font-size: 20px;
+  }
+
+  .hero__inner {
+    align-items: center;
+  }
+
+  .hero__titles {
+    text-align: center;
+    align-items: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero {
+    display: flex;
+    align-items: center;
+    min-height: 400px;
+    max-height: 500px;
+    padding: 60px 0;
+  }
+
+  .hero__title {
+    font-size: 32px;
+  }
+
+  .hero__subtitle {
+    font-size: 18px;
+  }
+
+  .hero__titles {
+    gap: 12px;
+  }
+}

@@ -1,14 +1,20 @@
 .chat-modal {
-    width: 400px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+  width: 400px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  max-width: 80vw;  /* На мобильных экранах будет не шире 95% экрана */
+  max-height: 90vh; /* Ограничение по высоте */
+  overflow: hidden;
 }
 
 .chat-modal__content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   background-color: #fdfdfd;
 }
 .chat-modal__inner {
@@ -19,6 +25,8 @@
 }
 
 .chat-modal__header {
+  flex: 0 0 auto;
+  z-index: 10;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -75,6 +83,7 @@
 }
 
 .chat-modal__content-wrapper {
+    max-height: 400px;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -82,15 +91,16 @@
 }
 
 .chat-worker-info {
+  flex-shrink: 0;
   font-weight: 700;
   display: flex;
   align-items: center;
   margin-bottom: 5px;
+  gap: 10px;
 }
 .worker-avatar {
   width: 30px;
   height: 30px;
-  margin-right: 10px;
 }
 
 .worker__img {
@@ -101,10 +111,11 @@
   height: 35px;
   border-radius: 50%;
   background-color: #B1B5C3;
-  margin-right: 10px;
 }
 
 .chat-messages {
+  flex-grow: 1;
+  flex: 1 1 auto;
   width: 100%;
   max-height: 400px;
   overflow-y: auto;
@@ -137,6 +148,8 @@
 }
 
 .chat-input {
+  flex-shrink: 0;
+  flex: 0 0 auto;
   width: 100%;
   display: flex;
   align-items: flex-end;
@@ -152,9 +165,9 @@
   padding: 6px;
   resize: none;
   overflow-y: auto;
-  min-height: 20px;
+  min-height: 40px;
   max-height: 100px;
-  font-size: 14px;
+  font-size: 16px;
   padding: 8px;
   border-radius: 4px;
   border: 1px solid #ccc;
@@ -178,4 +191,55 @@
   background-color: #0056b3;
 }
 
-  
+@media (max-width: 768px) {
+  .chat-modal {
+    max-height: 70vh;
+  }
+  .chat-modal__content-wrapper {
+    max-height: calc(70vh - 100px); /* пример, учитываем высоту шапки и input */
+  }
+  .chat-worker-info {
+    font-size: 14px;
+  }
+  .message-bubble {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .chat-modal {
+    max-height: 70vh;
+  }
+  .chat-modal__title {
+    font-size: 16px;
+  }
+  .chat-input textarea {
+    min-height: 60px;
+    font-size: 18px;
+  }
+  .close-button {
+    top: 5px;
+    left: auto;
+    right: 5px;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    background: none;
+  }
+}
+
+@media (max-width: 380px) {
+  .chat-input textarea {
+    min-height: 60px;
+    font-size: 16px;
+  }
+  .close-button {
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    top: -35px;
+    left: auto;
+    right: 0;
+    background: linear-gradient(110deg, #E00D2A, #1C69D6);
+  }
+}

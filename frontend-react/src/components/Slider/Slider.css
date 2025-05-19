@@ -2,12 +2,11 @@
     position: relative;
     overflow: hidden;
     height: 375px;
-    max-width: 50%;
     flex-shrink: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-  }
+}
 
   /* .slide__img {
     width: 100%;

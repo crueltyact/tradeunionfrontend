@@ -21,7 +21,7 @@ const Documents = () => {
     return (
         <>
             <FadeInSection delay={0.2}>
-                <HeroSection title="Cкачайте документы, которые вас интересуют" style={{ backgroundImage: 'url("/documents_bg.jpg")' }} titleStyle={{fontSize: "50px"}} />
+                <HeroSection title="Cкачайте документы, которые вас интересуют" style={{ backgroundImage: 'url("/documents_bg.jpg")' }} />
             </FadeInSection>
 
             <FadeInSection>

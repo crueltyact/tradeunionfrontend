@@ -10,4 +10,4 @@ const DocumentItem = (props) => {
     );
   };
   
-  export default DocumentItem;
+export default DocumentItem;

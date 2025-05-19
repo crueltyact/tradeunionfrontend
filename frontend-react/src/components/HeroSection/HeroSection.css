@@ -26,6 +26,38 @@
 }
 .hero-section__title {
     max-width: 60%;
-    font-size: 64px;
+    font-size: 55px;
     font-weight: 600;
+}
+
+@media (max-width: 1024px) {
+    .hero-section__inner {
+        padding: 80px 20px;
+    }
+    .hero-section__title {
+        max-width: 80%;
+        font-size: 48px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-section__inner {
+        padding: 60px 15px;
+    }
+    .hero-section__title {
+        max-width: 90%;
+        font-size: 36px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section__inner {
+        padding: 40px 10px;
+    }
+    .hero-section__title {
+        max-width: 100%;
+        font-size: 24px;
+        text-align: center;
+        width: 100%;
+    }
 }

@@ -5,7 +5,7 @@ const NewsItemList = ({news}) => {
     return (
         <>
             {news.map((item) => (
-                <NewsItem item={item} />
+                <NewsItem key={item.id} item={item} />
             ))}  
         </>
     );

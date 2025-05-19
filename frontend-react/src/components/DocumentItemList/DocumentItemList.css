@@ -5,3 +5,22 @@
     flex-wrap: wrap;
     gap: 30px;
 }
+
+@media (max-width: 1024px) {
+    .document-list {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .document-list {
+        gap: 20px;
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 360px) {
+    .document-list {
+        justify-content: center;
+    }
+}
